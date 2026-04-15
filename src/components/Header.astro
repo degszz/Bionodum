@@ -26,7 +26,7 @@ const navLinks = [
 
 <header
   id="header"
-  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-20">
@@ -35,12 +35,12 @@ const navLinks = [
         <img
           src="/images/logo.avif"
           alt="Bionodum Logo"
-          width="48"
-          height="48"
-          class="h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+          width="64"
+          height="64"
+          class="h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
           loading="eager"
         />
-        <span class="font-display font-700 text-xl text-gray-800 hidden sm:block tracking-tight">
+        <span id="header-title" class="font-display font-700 text-xl text-white hidden sm:block tracking-tight transition-colors duration-500">
           Bionodum
         </span>
       </a>
@@ -51,7 +51,7 @@ const navLinks = [
           <div class="relative group">
             <a
               href={link.href}
-              class="flex items-center gap-1 px-4 py-2 text-sm font-medium text-gray-600 rounded-lg hover:text-brand-500 hover:bg-brand-50 transition-colors duration-200"
+              class="header-link flex items-center gap-1 px-4 py-2 text-sm font-medium text-white/90 rounded-lg hover:text-white hover:bg-white/10 transition-all duration-300"
             >
               {link.label}
               {link.children && (
@@ -79,8 +79,9 @@ const navLinks = [
       <!-- CTA Button + Mobile trigger -->
       <div class="flex items-center gap-3">
         <a
+          id="header-cta"
           href="#contacto"
-          class="hidden lg:inline-flex items-center px-5 py-2.5 bg-brand-400 hover:bg-brand-500 text-white text-sm font-semibold rounded-full transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5"
+          class="hidden lg:inline-flex items-center px-5 py-2.5 bg-white/15 hover:bg-white/25 border border-white/30 text-white text-sm font-semibold rounded-full transition-all duration-300 backdrop-blur-sm hover:-translate-y-0.5"
         >
           Contactanos
         </a>
@@ -88,7 +89,7 @@ const navLinks = [
         <!-- Mobile hamburger -->
         <button
           id="mobile-menu-btn"
-          class="lg:hidden p-2 rounded-lg text-gray-600 hover:text-brand-500 hover:bg-brand-50 transition-colors"
+          class="lg:hidden p-2 rounded-lg text-white hover:text-white hover:bg-white/10 transition-colors"
           aria-label="Abrir menú"
           aria-expanded="false"
           aria-controls="mobile-menu"
@@ -111,7 +112,7 @@ const navLinks = [
   <!-- Mobile menu -->
   <div
     id="mobile-menu"
-    class="lg:hidden hidden border-t border-gray-100 bg-white"
+    class="lg:hidden hidden bg-white/95 backdrop-blur-xl border-t border-gray-200"
     aria-label="Menú móvil"
   >
     <div class="max-w-7xl mx-auto px-4 py-4 space-y-1">
@@ -149,8 +150,7 @@ const navLinks = [
   </div>
 </header>
 
-<!-- Header spacer -->
-<div class="h-20"></div>
+<!-- NO spacer — hero is fullscreen under transparent header -->
 
 <script>
   const btn = document.getElementById('mobile-menu-btn');
@@ -161,13 +161,12 @@ const navLinks = [
   btn?.addEventListener('click', () => {
     const isOpen = !menu?.classList.contains('hidden');
     menu?.classList.toggle('hidden');
-    hamburger?.classList.toggle('hidden', !isOpen ? false : false);
     hamburger?.classList.toggle('hidden');
     closeIcon?.classList.toggle('hidden');
     btn.setAttribute('aria-expanded', String(!isOpen));
   });
 
-  // Close mobile menu when a link is clicked
+  // Close mobile menu on link click
   menu?.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', () => {
       menu.classList.add('hidden');
@@ -177,13 +176,45 @@ const navLinks = [
     });
   });
 
-  // Scroll effect on header
+  // ---- Scroll: transparent → solid with blur ----
   const header = document.getElementById('header');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 20) {
-      header?.classList.add('shadow-md');
+  const headerTitle = document.getElementById('header-title');
+  const headerCta = document.getElementById('header-cta');
+  const headerLinks = document.querySelectorAll('.header-link');
+  const mobileBtn = document.getElementById('mobile-menu-btn');
+
+  function updateHeader() {
+    const scrolled = window.scrollY > 60;
+
+    if (scrolled) {
+      // Solid mode
+      header?.classList.add('bg-white/90', 'backdrop-blur-xl', 'shadow-lg', 'border-b', 'border-gray-200/50');
+      headerTitle?.classList.remove('text-white');
+      headerTitle?.classList.add('text-gray-800');
+      headerLinks.forEach((l) => {
+        l.classList.remove('text-white/90', 'hover:text-white', 'hover:bg-white/10');
+        l.classList.add('text-gray-600', 'hover:text-brand-500', 'hover:bg-brand-50');
+      });
+      headerCta?.classList.remove('bg-white/15', 'hover:bg-white/25', 'border-white/30', 'text-white', 'backdrop-blur-sm');
+      headerCta?.classList.add('bg-brand-400', 'hover:bg-brand-500', 'border-transparent', 'text-white', 'shadow-sm');
+      mobileBtn?.classList.remove('text-white', 'hover:text-white', 'hover:bg-white/10');
+      mobileBtn?.classList.add('text-gray-600', 'hover:text-brand-500', 'hover:bg-brand-50');
     } else {
-      header?.classList.remove('shadow-md');
+      // Transparent mode
+      header?.classList.remove('bg-white/90', 'backdrop-blur-xl', 'shadow-lg', 'border-b', 'border-gray-200/50');
+      headerTitle?.classList.remove('text-gray-800');
+      headerTitle?.classList.add('text-white');
+      headerLinks.forEach((l) => {
+        l.classList.remove('text-gray-600', 'hover:text-brand-500', 'hover:bg-brand-50');
+        l.classList.add('text-white/90', 'hover:text-white', 'hover:bg-white/10');
+      });
+      headerCta?.classList.remove('bg-brand-400', 'hover:bg-brand-500', 'border-transparent', 'shadow-sm');
+      headerCta?.classList.add('bg-white/15', 'hover:bg-white/25', 'border-white/30', 'text-white', 'backdrop-blur-sm');
+      mobileBtn?.classList.remove('text-gray-600', 'hover:text-brand-500', 'hover:bg-brand-50');
+      mobileBtn?.classList.add('text-white', 'hover:text-white', 'hover:bg-white/10');
     }
-  });
+  }
+
+  updateHeader();
+  window.addEventListener('scroll', updateHeader, { passive: true });
 </script>
