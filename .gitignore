@@ -1,0 +1,23 @@
+# build output
+dist/
+
+# dependencies
+node_modules/
+
+# astro generated
+.astro/
+
+# environment variables
+.env
+.env.*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# claude
+.claude/

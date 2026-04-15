@@ -1,0 +1,139 @@
+---
+import '../styles/global.css';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title = 'Bionodum – Nutrición Animal',
+  description = 'Bionodum es un equipo de profesionales en nutrición y salud animal. Ofrecemos productos con tecnología incorporada y servicios personalizados para la producción animal.',
+  image = '/images/logo.avif',
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://bionodum.com');
+---
+
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="keywords" content="nutrición animal, aditivos, ingredientes, premix, aves, rumiante, porcino, servicios veterinarios, GAIA, Argentina" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Bionodum" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:site_name" content="Bionodum" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={image} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/avif" href="/images/logo.avif" />
+    <link rel="apple-touch-icon" href="/images/logo.avif" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Rubik:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Bionodum",
+        "description": "Equipo de profesionales en nutrición y salud animal",
+        "url": "https://bionodum.com",
+        "logo": "https://bionodum.com/images/logo.avif",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Luis María Campos 827",
+          "addressLocality": "Morón",
+          "addressRegion": "Buenos Aires",
+          "addressCountry": "AR"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+54-9-221-655-0559",
+          "contactType": "customer service",
+          "availableLanguage": "Spanish"
+        },
+        "sameAs": [
+          "https://www.instagram.com/bionodum",
+          "https://www.linkedin.com/company/bionodum"
+        ]
+      }
+    </script>
+  </head>
+  <body class="font-sans text-gray-700 antialiased">
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --color-brand: #26AC87;
+    --color-green: #1f9474;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Intersection observer animation classes */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+  .reveal-delay-5 { transition-delay: 0.5s; }
+</style>
+
+<script>
+  // Scroll-reveal observer
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12 }
+  );
+
+  document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+</script>

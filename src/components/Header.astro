@@ -1,0 +1,189 @@
+---
+const navLinks = [
+  { label: 'Inicio', href: '#inicio' },
+  {
+    label: 'Productos',
+    href: '#productos',
+    children: [
+      { label: 'Aditivos', href: '#aditivos' },
+      { label: 'Ingredientes', href: '#ingredientes' },
+      { label: 'Premix', href: '#premix' },
+    ],
+  },
+  {
+    label: 'Servicios',
+    href: '#servicios',
+    children: [
+      { label: 'Servicios a Campo', href: '#servicios-a-campo' },
+      { label: 'Data Analytics', href: '#data-analytics' },
+      { label: 'Análisis de Calidad', href: '#analisis-calidad' },
+    ],
+  },
+  { label: 'Acerca de', href: '#acerca-de' },
+  { label: 'Contacto', href: '#contacto' },
+];
+---
+
+<header
+  id="header"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      <!-- Logo -->
+      <a href="#inicio" class="flex items-center gap-3 group" aria-label="Bionodum - Inicio">
+        <img
+          src="/images/logo.avif"
+          alt="Bionodum Logo"
+          width="48"
+          height="48"
+          class="h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+          loading="eager"
+        />
+        <span class="font-display font-700 text-xl text-gray-800 hidden sm:block tracking-tight">
+          Bionodum
+        </span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden lg:flex items-center gap-1" aria-label="Navegación principal">
+        {navLinks.map((link) => (
+          <div class="relative group">
+            <a
+              href={link.href}
+              class="flex items-center gap-1 px-4 py-2 text-sm font-medium text-gray-600 rounded-lg hover:text-brand-500 hover:bg-brand-50 transition-colors duration-200"
+            >
+              {link.label}
+              {link.children && (
+                <svg class="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              )}
+            </a>
+            {link.children && (
+              <div class="absolute top-full left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-1 group-hover:translate-y-0 z-50">
+                {link.children.map((child) => (
+                  <a
+                    href={child.href}
+                    class="block px-4 py-2.5 text-sm text-gray-600 hover:text-brand-500 hover:bg-brand-50 first:rounded-t-xl last:rounded-b-xl transition-colors duration-150"
+                  >
+                    {child.label}
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </nav>
+
+      <!-- CTA Button + Mobile trigger -->
+      <div class="flex items-center gap-3">
+        <a
+          href="#contacto"
+          class="hidden lg:inline-flex items-center px-5 py-2.5 bg-brand-400 hover:bg-brand-500 text-white text-sm font-semibold rounded-full transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5"
+        >
+          Contactanos
+        </a>
+
+        <!-- Mobile hamburger -->
+        <button
+          id="mobile-menu-btn"
+          class="lg:hidden p-2 rounded-lg text-gray-600 hover:text-brand-500 hover:bg-brand-50 transition-colors"
+          aria-label="Abrir menú"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <span id="hamburger-icon">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </span>
+          <span id="close-icon" class="hidden">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="lg:hidden hidden border-t border-gray-100 bg-white"
+    aria-label="Menú móvil"
+  >
+    <div class="max-w-7xl mx-auto px-4 py-4 space-y-1">
+      {navLinks.map((link) => (
+        <div>
+          <a
+            href={link.href}
+            class="block px-4 py-3 text-sm font-medium text-gray-700 hover:text-brand-500 hover:bg-brand-50 rounded-lg transition-colors"
+          >
+            {link.label}
+          </a>
+          {link.children && (
+            <div class="ml-4 mt-1 space-y-1">
+              {link.children.map((child) => (
+                <a
+                  href={child.href}
+                  class="block px-4 py-2 text-sm text-gray-500 hover:text-brand-500 hover:bg-brand-50 rounded-lg transition-colors"
+                >
+                  {child.label}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+      <div class="pt-3 border-t border-gray-100">
+        <a
+          href="#contacto"
+          class="block w-full text-center px-5 py-3 bg-brand-400 hover:bg-brand-500 text-white text-sm font-semibold rounded-full transition-colors"
+        >
+          Contactanos
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Header spacer -->
+<div class="h-20"></div>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const hamburger = document.getElementById('hamburger-icon');
+  const closeIcon = document.getElementById('close-icon');
+
+  btn?.addEventListener('click', () => {
+    const isOpen = !menu?.classList.contains('hidden');
+    menu?.classList.toggle('hidden');
+    hamburger?.classList.toggle('hidden', !isOpen ? false : false);
+    hamburger?.classList.toggle('hidden');
+    closeIcon?.classList.toggle('hidden');
+    btn.setAttribute('aria-expanded', String(!isOpen));
+  });
+
+  // Close mobile menu when a link is clicked
+  menu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      menu.classList.add('hidden');
+      hamburger?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+      btn?.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Scroll effect on header
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      header?.classList.add('shadow-md');
+    } else {
+      header?.classList.remove('shadow-md');
+    }
+  });
+</script>

@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Products from '../components/Products.astro';
+import Services from '../components/Services.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+---
+
+<Layout
+  title="Bionodum – Nutrición Animal | Aditivos, Ingredientes y Servicios"
+  description="Bionodum es un equipo de profesionales en nutrición y salud animal. Ofrecemos aditivos, ingredientes, premix y servicios de consultoría 360° para aves, rumiantes y porcinos en Argentina."
+>
+  <Header />
+  <main>
+    <Hero />
+    <About />
+    <Products />
+    <Services />
+    <Contact />
+  </main>
+  <Footer />
+  <WhatsAppButton />
+</Layout>

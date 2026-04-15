@@ -1,0 +1,182 @@
+---
+const mainServices = [
+  {
+    id: 'servicios-a-campo',
+    number: '01',
+    icon: `<svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>`,
+    title: 'Servicios a Campo',
+    tagline: 'Asesoramiento veterinario y de nutrición',
+    description:
+      'Asesoramiento veterinario y de nutrición en campo y en planta de alimentos balanceados. Acompañamos al productor en el día a día para maximizar la eficiencia productiva.',
+    features: [
+      'Formulación de raciones y control de calidad de materias primas',
+      'Asesoramiento veterinario en campo',
+      'Soporte técnico en plantas de alimentos balanceados',
+      'Gestión sanitaria y reproductiva',
+      'Diagnóstico y resolución de problemas productivos',
+      'Visitas periódicas a establecimientos',
+    ],
+  },
+  {
+    id: 'data-analytics',
+    number: '02',
+    icon: `<svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>`,
+    title: 'Data Analytics',
+    tagline: 'Datos que transforman — Sistema GAIA',
+    description:
+      'En la industria de la producción animal, la digitalización de las actividades es fundamental para lograr la eficiencia. Gestionamos y procesamos datos productivos mediante el sistema GAIA.',
+    features: [
+      'Gestión y procesamiento de datos productivos mediante GAIA',
+      'Digitalización de actividades productivas',
+      'Análisis de escenarios y correlaciones',
+      'Mejora en la toma de decisiones',
+      'Reportes y dashboards personalizados',
+      'Integración con sistemas existentes',
+    ],
+    highlight: {
+      label: 'Sistema GAIA',
+      url: 'https://gaia-gestion.com',
+      text: 'Ver más sobre GAIA →',
+    },
+  },
+  {
+    id: 'analisis-calidad',
+    number: '03',
+    icon: `<svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>`,
+    title: 'Análisis de Calidad',
+    tagline: 'Control de calidad de materias primas',
+    description:
+      'Formulación de raciones y control exhaustivo de calidad de materias primas. Garantizamos que cada insumo cumpla los estándares nutricionales y sanitarios más exigentes.',
+    features: [
+      'Control de calidad de materias primas',
+      'Formulación de raciones balanceadas',
+      'Análisis bromatológicos',
+      'Verificación de especificaciones técnicas',
+      'Trazabilidad de insumos',
+      'Certificación de calidad para producción',
+    ],
+  },
+];
+---
+
+<section id="servicios" class="py-24 bg-white overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="text-center mb-16 reveal">
+      <span class="inline-block px-4 py-1.5 bg-brand-50 text-brand-600 text-sm font-semibold rounded-full mb-4 tracking-wide uppercase">
+        Servicios
+      </span>
+      <h2 class="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-gray-900 mb-6">
+        Nuestros servicios
+      </h2>
+      <p class="text-lg text-gray-500 max-w-2xl mx-auto">
+        Un enfoque integral para potenciar su empresa. Desde el campo hasta los datos, acompañamos cada etapa de la producción animal.
+      </p>
+    </div>
+
+    <!-- Services list -->
+    <div class="space-y-8">
+      {mainServices.map((service, i) => (
+        <div
+          id={service.id}
+          class={`reveal reveal-delay-${i + 1} group`}
+        >
+          <div class="bg-gray-50 hover:bg-white border border-gray-100 hover:border-brand-200 hover:shadow-xl rounded-3xl p-8 lg:p-10 transition-all duration-300">
+            <div class="grid lg:grid-cols-[auto_1fr_auto] gap-6 lg:gap-10 items-start">
+              <!-- Number + Icon -->
+              <div class="flex lg:flex-col items-center lg:items-start gap-4">
+                <span class="font-display font-bold text-5xl text-brand-200 group-hover:text-brand-300 transition-colors duration-300 leading-none">
+                  {service.number}
+                </span>
+                <div class="w-14 h-14 bg-brand-100 group-hover:bg-brand-500 rounded-2xl flex items-center justify-center text-brand-600 group-hover:text-white transition-all duration-300">
+                  <Fragment set:html={service.icon} />
+                </div>
+              </div>
+
+              <!-- Content -->
+              <div class="space-y-4">
+                <div>
+                  <p class="text-xs font-semibold text-brand-500 uppercase tracking-wider mb-1">{service.tagline}</p>
+                  <h3 class="font-display font-bold text-2xl sm:text-3xl text-gray-900">{service.title}</h3>
+                </div>
+
+                <p class="text-gray-600 leading-relaxed">{service.description}</p>
+
+                <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-2">
+                  {service.features.map(feat => (
+                    <li class="flex items-start gap-2 text-sm text-gray-600">
+                      <svg class="w-4 h-4 text-brand-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                      </svg>
+                      {feat}
+                    </li>
+                  ))}
+                </ul>
+
+                {service.highlight && (
+                  <div class="inline-flex items-center gap-2 px-4 py-2 bg-brand-50 border border-brand-200 rounded-xl text-sm">
+                    <span class="w-2 h-2 bg-brand-400 rounded-full"></span>
+                    <span class="font-semibold text-brand-700">{service.highlight.label}</span>
+                    <span class="text-gray-400">—</span>
+                    <a
+                      href={service.highlight.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-brand-600 hover:text-brand-800 font-medium transition-colors"
+                    >
+                      {service.highlight.text}
+                    </a>
+                  </div>
+                )}
+              </div>
+
+              <!-- CTA -->
+              <div class="lg:self-center">
+                <a
+                  href="#contacto"
+                  class="inline-flex items-center gap-2 px-5 py-3 bg-brand-400 hover:bg-brand-500 text-white text-sm font-semibold rounded-full transition-all duration-200 hover:-translate-y-0.5 shadow-sm hover:shadow-md whitespace-nowrap"
+                >
+                  Solicitar info
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Bottom CTA banner -->
+    <div class="mt-16 reveal">
+      <div class="bg-gradient-to-r from-brand-800 to-brand-600 rounded-3xl p-8 sm:p-12 text-center text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+          <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <pattern id="grid2" width="8" height="8" patternUnits="userSpaceOnUse">
+                <path d="M 8 0 L 0 0 0 8" fill="none" stroke="white" stroke-width="0.5"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid2)" />
+          </svg>
+        </div>
+        <div class="relative z-10">
+          <h3 class="font-display font-bold text-2xl sm:text-3xl mb-4">¿Listo para optimizar su producción?</h3>
+          <p class="text-white/80 mb-8 max-w-xl mx-auto">
+            Contactenos hoy y un especialista de nuestro equipo lo asesorará sin compromiso.
+          </p>
+          <a
+            href="#contacto"
+            class="inline-flex items-center gap-2 px-8 py-4 bg-white hover:bg-brand-50 text-brand-800 font-bold rounded-full transition-all duration-200 hover:-translate-y-0.5 shadow-lg"
+          >
+            Hablar con un especialista
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
