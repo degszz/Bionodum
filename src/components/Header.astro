@@ -158,21 +158,26 @@ const navLinks = [
   const hamburger = document.getElementById('hamburger-icon');
   const closeIcon = document.getElementById('close-icon');
 
+  let menuOpen = false;
+
   btn?.addEventListener('click', () => {
-    const isOpen = !menu?.classList.contains('hidden');
+    menuOpen = !menuOpen;
     menu?.classList.toggle('hidden');
     hamburger?.classList.toggle('hidden');
     closeIcon?.classList.toggle('hidden');
-    btn.setAttribute('aria-expanded', String(!isOpen));
+    btn.setAttribute('aria-expanded', String(menuOpen));
+    updateHeader(); // re-evaluate header bg
   });
 
   // Close mobile menu on link click
   menu?.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', () => {
+      menuOpen = false;
       menu.classList.add('hidden');
       hamburger?.classList.remove('hidden');
       closeIcon?.classList.add('hidden');
       btn?.setAttribute('aria-expanded', 'false');
+      updateHeader(); // re-evaluate header bg
     });
   });
 
@@ -187,9 +192,12 @@ const navLinks = [
 
   function updateHeader() {
     const scrolled = window.scrollY > 60;
+    // Header needs dark bg if: scrolled OR mobile menu is open
+    const needsSolid = scrolled || menuOpen;
 
     if (scrolled) {
-      // Solid mode — white blur, NO border
+      // Scrolled: white blur header
+      header?.classList.remove('bg-black/70', 'backdrop-blur-md');
       header?.classList.add('bg-white/90', 'backdrop-blur-xl', 'shadow-lg');
       headerTitle?.classList.remove('text-white');
       headerTitle?.classList.add('text-gray-800');
@@ -201,16 +209,31 @@ const navLinks = [
       headerCta?.classList.add('bg-brand-400', 'hover:bg-brand-500', 'border-transparent', 'shadow-sm');
       mobileBtn?.classList.remove('text-white', 'hover:text-white', 'hover:bg-white/10');
       mobileBtn?.classList.add('text-gray-600', 'hover:text-brand-500', 'hover:bg-brand-50');
-      // Mobile menu solid
+      // Mobile menu: white bg when scrolled
       mobileMenuInner?.classList.remove('bg-black/60');
       mobileMenuInner?.classList.add('bg-white/95');
       mobileLinks.forEach((l) => {
         l.classList.remove('text-white/90', 'text-white/70', 'hover:text-white', 'hover:bg-white/10');
         l.classList.add('text-gray-700', 'hover:text-brand-500', 'hover:bg-brand-50');
       });
-    } else {
-      // Transparent mode — no background, no border, no shadow
+    } else if (menuOpen) {
+      // Not scrolled but menu open: dark glass on header bar too
       header?.classList.remove('bg-white/90', 'backdrop-blur-xl', 'shadow-lg');
+      header?.classList.add('bg-black/70', 'backdrop-blur-md');
+      headerTitle?.classList.remove('text-gray-800');
+      headerTitle?.classList.add('text-white');
+      mobileBtn?.classList.remove('text-gray-600', 'hover:text-brand-500', 'hover:bg-brand-50');
+      mobileBtn?.classList.add('text-white', 'hover:text-white', 'hover:bg-white/10');
+      // Mobile menu: dark glass
+      mobileMenuInner?.classList.remove('bg-white/95');
+      mobileMenuInner?.classList.add('bg-black/60');
+      mobileLinks.forEach((l) => {
+        l.classList.remove('text-gray-700', 'hover:text-brand-500', 'hover:bg-brand-50');
+        l.classList.add('text-white/90', 'hover:text-white', 'hover:bg-white/10');
+      });
+    } else {
+      // Transparent mode — no background, no shadow
+      header?.classList.remove('bg-white/90', 'backdrop-blur-xl', 'shadow-lg', 'bg-black/70', 'backdrop-blur-md');
       headerTitle?.classList.remove('text-gray-800');
       headerTitle?.classList.add('text-white');
       headerLinks.forEach((l) => {
@@ -221,7 +244,7 @@ const navLinks = [
       headerCta?.classList.add('bg-white/15', 'hover:bg-white/25', 'border-white/30', 'backdrop-blur-sm');
       mobileBtn?.classList.remove('text-gray-600', 'hover:text-brand-500', 'hover:bg-brand-50');
       mobileBtn?.classList.add('text-white', 'hover:text-white', 'hover:bg-white/10');
-      // Mobile menu transparent
+      // Mobile menu: dark glass
       mobileMenuInner?.classList.remove('bg-white/95');
       mobileMenuInner?.classList.add('bg-black/60');
       mobileLinks.forEach((l) => {
