@@ -10,10 +10,12 @@ export interface Props {
 const {
   title = 'Bionodum – Nutrición Animal',
   description = 'Bionodum es un equipo de profesionales en nutrición y salud animal. Ofrecemos productos con tecnología incorporada y servicios personalizados para la producción animal.',
-  image = '/images/logo.avif',
+  image = '/images/og-image.jpg',
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://bionodum.com');
+const siteURL = Astro.site ?? new URL('https://bionodum.vercel.app');
+const canonicalURL = new URL(Astro.url.pathname, siteURL);
+const ogImage = new URL(image, siteURL).toString();
 ---
 
 <!doctype html>
@@ -37,7 +39,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://bionodum
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={image} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:locale" content="es_AR" />
     <meta property="og:site_name" content="Bionodum" />
 
@@ -46,7 +51,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://bionodum
     <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={image} />
+    <meta property="twitter:image" content={ogImage} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/avif" href="/images/icon.avif" />
