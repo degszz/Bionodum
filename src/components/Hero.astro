@@ -5,18 +5,34 @@
   id="inicio"
   class="relative h-screen flex items-center overflow-hidden"
 >
-  <!-- Video background -->
+  <!-- Video background (mobile vertical / desktop horizontal).
+       The <source> is injected by the inline script below so that each
+       device only downloads ONE file (no double-fetch). -->
   <video
+    id="hero-video"
     autoplay
     muted
     loop
     playsinline
     preload="auto"
-    class="absolute inset-0 w-full h-full object-cover"
+    class="absolute inset-0 w-full h-full object-cover bg-brand-950"
     aria-hidden="true"
-  >
-    <source src="/images/hero-video.mp4" type="video/mp4" />
-  </video>
+  ></video>
+  <script is:inline>
+    (function () {
+      var v = document.getElementById('hero-video');
+      if (!v) return;
+      var isMobile = window.matchMedia('(max-width: 767px)').matches;
+      var src = isMobile
+        ? '/images/hero-video-mobile.mp4'
+        : '/images/hero-video.mp4';
+      var s = document.createElement('source');
+      s.src = src;
+      s.type = 'video/mp4';
+      v.appendChild(s);
+      v.load();
+    })();
+  </script>
 
   <!-- Dark overlay with gradient -->
   <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-brand-950/80"></div>

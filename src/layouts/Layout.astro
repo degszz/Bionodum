@@ -57,6 +57,26 @@ const ogImage = new URL(image, siteURL).toString();
     <link rel="icon" type="image/avif" href="/images/icon.avif" />
     <link rel="apple-touch-icon" href="/images/icon.avif" />
 
+    <!-- Preload the correct hero video as early as possible so playback
+         starts the moment <video> is parsed. Inline script runs before the
+         body is rendered, adding a <link rel="preload"> for just one file. -->
+    <script is:inline>
+      (function () {
+        try {
+          var isMobile = window.matchMedia('(max-width: 767px)').matches;
+          var src = isMobile
+            ? '/images/hero-video-mobile.mp4'
+            : '/images/hero-video.mp4';
+          var link = document.createElement('link');
+          link.rel = 'preload';
+          link.as = 'video';
+          link.href = src;
+          link.type = 'video/mp4';
+          document.head.appendChild(link);
+        } catch (e) { /* no-op */ }
+      })();
+    </script>
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
